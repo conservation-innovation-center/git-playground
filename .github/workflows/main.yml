@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Publish to Bluehost
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Upload Files
+        uses: pontago/lftp-deploy-action@master
+        with:
+          protocol: sftp
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_dir: ./arc/
+          remote_dir: /
